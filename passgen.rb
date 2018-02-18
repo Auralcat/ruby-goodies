@@ -25,8 +25,8 @@ class PasswordGenerator
 
 end
 
-# Treating options on input
-options = {}
+# Treating options on input, initialize base values
+options = {:length => 10, :count => 1}
 
 OptionParser.new do |parser|
   parser.banner = "CLI password generator."
@@ -58,8 +58,10 @@ OptionParser.new do |parser|
   end
 end.parse!
 
+# Tie everything together
 p = PasswordGenerator.new(options)
 
+# Output more passwords if -c is present
 options[:count].times do
   puts p.generate
 end
