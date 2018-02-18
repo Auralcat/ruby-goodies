@@ -61,7 +61,6 @@ end.parse!
 # Tie everything together
 p = PasswordGenerator.new(options)
 
-# Output more passwords if -c is present
 options[:count].times do
   puts p.generate
 end
