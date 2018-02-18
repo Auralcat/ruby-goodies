@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require './passgen'
+require 'set'
 
 class TestPasswordGenerator < Minitest::Test
 
@@ -11,8 +12,7 @@ class TestPasswordGenerator < Minitest::Test
     assert_equal 10, @passgen.generate.length
   end
 
-  def test_alphanumeric_only_on_default
-    non_alpha = ALPHANUMERIC - ALL_CHARS
-    assert_equal false, @passgen.generate.split("").include?(non_alpha)
+  def test_password_has_all_chars_on_default
+    assert_equal true, @passgen.generate.match(/\A[a-zA-z0-9]*\z/).nil?
   end
 end
