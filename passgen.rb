@@ -23,9 +23,6 @@ class PasswordGenerator
     end
   end
 
-  def output
-
-  end
 end
 
 # Treating options on input
@@ -38,6 +35,13 @@ OptionParser.new do |parser|
             "--alphanumeric",
             "Generate password only with letters and numbers") do |v|
     options[:alpha] = v
+  end
+
+  parser.on("-c",
+            "--count COUNT",
+            Integer,
+            "Generate COUNT passwords") do |c|
+    options[:count] = c
   end
 
   parser.on("-h",
@@ -55,4 +59,7 @@ OptionParser.new do |parser|
 end.parse!
 
 p = PasswordGenerator.new(options)
-puts p.generate
+
+options[:count].times do
+  puts p.generate
+end
