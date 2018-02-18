@@ -18,17 +18,28 @@ class PasswordGenerator
   def generate_alpha
 
   end
+
+  def output
+
+  end
 end
 
 # Treating options on input
 options = {}
 
 OptionParser.new do |parser|
+  parser.banner = "CLI password generator."
 
   parser.on("-a",
             "--alphanumeric",
             "Generate password only with letters and numbers") do |v|
     options[:alpha] = v
+  end
+
+  parser.on("-h",
+            "--help",
+            "Display this help message.") do ||
+    puts parser
   end
 
   parser.on("-l",
@@ -38,5 +49,5 @@ OptionParser.new do |parser|
   end
 end.parse!
 
-p = PasswordGenerator.new
-p p.generate
+p = PasswordGenerator.new(options)
+p p.output
