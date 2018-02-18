@@ -15,8 +15,12 @@ class PasswordGenerator
     @options = options
   end
 
-  def generate_alpha
-
+  def generate
+    if @options[:alpha]
+      ALPHANUMERIC.sample(@options[:length]).join
+    else
+      ALL_CHARS.sample(@options[:length]).join
+    end
   end
 
   def output
@@ -44,10 +48,11 @@ OptionParser.new do |parser|
 
   parser.on("-l",
             "--length LENGTH",
+            Integer,
             "Generate password with length LENGTH. Default is 10.") do |l|
     options[:length] = l
   end
 end.parse!
 
 p = PasswordGenerator.new(options)
-p p.output
+puts p.generate
