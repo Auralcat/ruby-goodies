@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # CLI password generator in Ruby.
 
 require 'optparse'
