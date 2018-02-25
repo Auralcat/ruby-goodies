@@ -35,6 +35,10 @@ class PasswordGenerator
     else
       ALL_CHARS.sample(@options[:length]).join
     end
+
+    if @options[:test]
+      "Test option called"
+    end
   end
 
 end
@@ -44,6 +48,15 @@ options = {:length => 10, :count => 1}
 
 OptionParser.new do |parser|
   parser.banner = "CLI password generator."
+
+  # This is just so we don't have to type parser.on ALL the time
+  parser_proc = -> (short_option, long_option, description) {
+    parser.on(short_option, long_option, description) do |opt|
+      options[long_option.gsub("-", "")] = opt
+    end
+  }
+
+  parser_proc.call("-t", "--test", "Option for testing procs")
 
   parser.on("-a",
             "--alphanumeric",
