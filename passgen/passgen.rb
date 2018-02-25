@@ -8,6 +8,7 @@ ALL_CHARS = (32).upto(126).map{|n| n.chr} # includes parens, brackets, etc
 ALPHANUMERIC = "a".upto("z").to_a
   .concat("A".upto("Z").to_a)
   .concat("0".upto("9").to_a)
+EMOJI = File.open("emoji-list.txt", "r") {|file| file.read.split("\n")}
 
 # This is the logic part of the program
 class PasswordGenerator
@@ -17,7 +18,13 @@ class PasswordGenerator
   end
 
   def generate
-    if @options[:alpha]
+    if @options[:emoji]
+      # We'll need an extra script to show emoji in the shell.
+      # For now I'm using emojify
+
+      # We need to put a space between the aliases for emojify to work
+      `emojify #{EMOJI.sample(@options[:length]).join(" ")}`.delete(" ")
+    elsif @options[:alpha]
       ALPHANUMERIC.sample(@options[:length]).join
     else
       ALL_CHARS.sample(@options[:length]).join
@@ -43,6 +50,12 @@ OptionParser.new do |parser|
             Integer,
             "Generate COUNT passwords") do |c|
     options[:count] = c
+  end
+
+  parser.on("-e",
+           "--emoji",
+           "Generate emoji-only passwords") do |e|
+    options[:emoji] = e
   end
 
   parser.on("-h",
