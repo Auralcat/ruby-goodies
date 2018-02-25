@@ -8,7 +8,13 @@ ALL_CHARS = (32).upto(126).map{|n| n.chr} # includes parens, brackets, etc
 ALPHANUMERIC = "a".upto("z").to_a
   .concat("A".upto("Z").to_a)
   .concat("0".upto("9").to_a)
-EMOJI = File.open("emoji-list.txt", "r") {|file| file.read.split("\n")}
+
+buf = []
+File.foreach('emoji-list.txt') do |line|
+  buf << line.chomp
+end
+
+EMOJI = buf
 
 # This is the logic part of the program
 class PasswordGenerator
