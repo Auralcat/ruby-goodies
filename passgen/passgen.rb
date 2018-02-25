@@ -30,14 +30,10 @@ class PasswordGenerator
 
       # We need to put a space between the aliases for emojify to work
       `emojify #{EMOJI.sample(@options[:length]).join(" ")}`.delete(" ")
-    elsif @options[:alpha]
+    elsif @options["alphanumeric"]
       ALPHANUMERIC.sample(@options[:length]).join
     else
       ALL_CHARS.sample(@options[:length]).join
-    end
-
-    if @options[:test]
-      "Test option called"
     end
   end
 
@@ -58,11 +54,13 @@ OptionParser.new do |parser|
 
   parser_proc.call("-t", "--test", "Option for testing procs")
 
-  parser.on("-a",
-            "--alphanumeric",
-            "Generate password only with letters and numbers") do |v|
-    options[:alpha] = v
-  end
+  # parser.on("-a",
+  #           "--alphanumeric",
+  #           "Generate password only with letters and numbers") do |v|
+  #   options[:alpha] = v
+  # end
+
+  parser_proc.call("-a", "--alphanumeric", "Generate password only with letters and numbers")
 
   parser.on("-c",
             "--count COUNT",

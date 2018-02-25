@@ -1,6 +1,5 @@
 require 'minitest/autorun'
 require './passgen'
-require 'set'
 
 class TestPasswordGenerator < Minitest::Test
 
