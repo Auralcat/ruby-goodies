@@ -9,14 +9,7 @@ ALPHANUMERIC = "a".upto("z").to_a
   .concat("A".upto("Z").to_a)
   .concat("0".upto("9").to_a)
 
-
-# Refactor here later
-buf = []
-File.foreach('emoji-list.txt') do |line|
-  buf << line.chomp
-end
-
-EMOJI = buf
+EMOJI = File.readlines('emoji-list.txt').map{|line| line.chomp}
 
 # This is the logic part of the program
 class PasswordGenerator
