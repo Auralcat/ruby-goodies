@@ -9,7 +9,9 @@ ALPHANUMERIC = "a".upto("z").to_a
   .concat("A".upto("Z").to_a)
   .concat("0".upto("9").to_a)
 
-EMOJI = File.readlines('emoji-list.txt').map{|line| line.chomp}
+# Find emoji-list.txt
+emoji_file_path = Dir.home + "/ruby-goodies/passgen/emoji-list.txt"
+EMOJI = File.readlines(emoji_file_path).map{|line| line.chomp}
 
 # This is the logic part of the program
 class PasswordGenerator
