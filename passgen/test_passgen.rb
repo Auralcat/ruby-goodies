@@ -27,4 +27,9 @@ class TestPasswordGenerator < Minitest::Test
                                           "alphanumeric" => true)
     assert_equal false, alpha_passgen.has_non_alpha_chars?
   end
+
+  def test_outputs_multiple_passwords_with_option_c
+    custom_pass = PasswordGenerator.new("length" => 10, "count" => 3)
+    assert_equal 3,  custom_pass.generate.lines.count
+  end
 end
