@@ -9,6 +9,8 @@ ALPHANUMERIC = "a".upto("z").to_a
   .concat("A".upto("Z").to_a)
   .concat("0".upto("9").to_a)
 
+
+# Refactor here later
 buf = []
 File.foreach('emoji-list.txt') do |line|
   buf << line.chomp
@@ -24,7 +26,7 @@ class PasswordGenerator
   end
 
   def generate
-    if @options[:emoji]
+    if @options["emoji"]
       # We'll need an extra script to show emoji in the shell.
       # For now I'm using emojify
 
@@ -40,7 +42,7 @@ class PasswordGenerator
 end
 
 # Treating options on input, initialize base values
-options = {:length => 10, :count => 1}
+options = {:length => 10,   :count => 1}
 
 OptionParser.new do |parser|
   parser.banner = "CLI password generator."
@@ -52,35 +54,19 @@ OptionParser.new do |parser|
     end
   }
 
-  parser_proc.call("-t", "--test", "Option for testing procs")
-
-  # parser.on("-a",
-  #           "--alphanumeric",
-  #           "Generate password only with letters and numbers") do |v|
-  #   options[:alpha] = v
-  # end
-
+  # Working with the boolean options
   parser_proc.call("-a", "--alphanumeric", "Generate password only with letters and numbers")
+  parser_proc.call("-c", "--count", "Generate COUNT passwords")
+  parser_proc.call("-e", "--emoji", "Generate emoji-only passwords")
 
-  parser.on("-c",
-            "--count COUNT",
-            Integer,
-            "Generate COUNT passwords") do |c|
-    options[:count] = c
-  end
-
-  parser.on("-e",
-           "--emoji",
-           "Generate emoji-only passwords") do |e|
-    options[:emoji] = e
-  end
-
+  # This is a different case
   parser.on("-h",
             "--help",
             "Display this help message.") do ||
     puts parser
   end
 
+  # We need to cast the length to Integer here
   parser.on("-l",
             "--length LENGTH",
             Integer,
