@@ -52,7 +52,7 @@ OptionParser.new do |parser|
   # Passing integers to the option
   parser_int_proc = -> (short_opt, long_opt, description) {
     parser.on(short_opt, long_opt, Integer, description) do |value|
-      options[long_opt.gsub("-", "")] = value
+      options[long_opt.gsub(/[A-Z-]+/, "").delete(" ")] = value
     end
   }
 
