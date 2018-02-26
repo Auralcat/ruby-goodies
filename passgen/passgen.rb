@@ -13,11 +13,32 @@ ALPHANUMERIC = "a".upto("z").to_a
 emoji_file_path = Dir.home + "/ruby-goodies/passgen/emoji-list.txt"
 EMOJI = File.readlines(emoji_file_path).map{|line| line.chomp}
 
+# Creating module to mix in with the PasswordGenerator class
+
 # This is the logic part of the program
 class PasswordGenerator
 
   def initialize(options)
     @options = options
+  end
+
+  def emoji_output?
+    # Looks for words like :high_heeled_shoe: <- like this
+    # For that we'll need to call the sampling BEFORE converting the words to
+    # emoji in the script.
+
+    if @options["emoji"]
+      # Do the usual set sampling
+      test_sample = EMOJI.sample(@options["length"]).join
+      !test_sample.match(/:\w+:/).nil?
+    else
+      false
+    end
+
+  end
+
+  def all_chars_output?
+    self.generate.match(/[A-z0-9]*/).nil?
   end
 
   def generate
@@ -79,4 +100,5 @@ p = PasswordGenerator.new(options)
 
 options["count"].times do
   puts p.generate
+  puts p.all_chars_output?
 end
