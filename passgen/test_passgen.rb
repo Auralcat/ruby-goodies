@@ -12,13 +12,19 @@ class TestPasswordGenerator < Minitest::Test
   end
 
   def test_password_has_all_chars_on_default
-    assert_equal true, @passgen.all_chars_output?
+    assert_equal true, @passgen.has_non_alpha_chars?
   end
 
   def test_outputs_emoji_password_with_option_e
     # We need a new class with emoji enabled
     emoji_passgen = PasswordGenerator.new("length" => 10, "count" => 1,
                                           "emoji" => true)
-    assert_equal true, emoji_passgen.emoji_output?
+    assert_equal true, emoji_passgen.has_emoji?
+  end
+
+  def test_outputs_alpha_only_with_option_a
+    alpha_passgen = PasswordGenerator.new("length" => 10, "count" => 1,
+                                          "alphanumeric" => true)
+    assert_equal false, alpha_passgen.has_non_alpha_chars?
   end
 end

@@ -22,7 +22,7 @@ class PasswordGenerator
     @options = options
   end
 
-  def emoji_output?
+  def has_emoji?
     # Looks for words like :high_heeled_shoe: <- like this
     # For that we'll need to call the sampling BEFORE converting the words to
     # emoji in the script.
@@ -37,8 +37,8 @@ class PasswordGenerator
 
   end
 
-  def all_chars_output?
-    self.generate.match(/[A-z0-9]*/).nil?
+  def has_non_alpha_chars?
+    self.generate.match(/^[a-zA-Z0-9_]*$/).nil?
   end
 
   def generate
@@ -100,5 +100,4 @@ p = PasswordGenerator.new(options)
 
 options["count"].times do
   puts p.generate
-  puts p.all_chars_output?
 end
