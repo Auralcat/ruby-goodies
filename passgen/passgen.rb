@@ -27,9 +27,9 @@ class PasswordGenerator
     # For that we'll need to call the sampling BEFORE converting the words to
     # emoji in the script.
 
-    if @options["emoji"]
+    if @options[:emoji]
       # Do the usual set sampling
-      test_sample = EMOJI.sample(@options["length"]).join
+      test_sample = EMOJI.sample(@options[:length]).join
       !test_sample.match(/:\w+:/).nil?
     else
       false
@@ -43,18 +43,18 @@ class PasswordGenerator
 
   def generate
     output = []
-    @options["count"].times do
-      if @options["emoji"]
+    @options[:count].times do
+      if @options[:emoji]
         # We'll need an extra script to show emoji in the shell.
         # For now I'm using emojify
 
         # We need to put a space between the aliases for emojify to work
-        raw_emoji_sample = EMOJI.sample(@options["length"]).join(" ")
+        raw_emoji_sample = EMOJI.sample(@options[:length]).join(" ")
         output << `emojify #{raw_emoji_sample}`.delete(" ")
-      elsif @options["alphanumeric"]
-        output << ALPHANUMERIC.sample(@options["length"]).join
+      elsif @options[:alphanumeric]
+        output << ALPHANUMERIC.sample(@options[:length]).join
       else
-        output << ALL_CHARS.sample(@options["length"]).join
+        output << ALL_CHARS.sample(@options[:length]).join
       end
     end
     output.join("\n")
@@ -63,7 +63,7 @@ class PasswordGenerator
 end
 
 # Treating options on input, initialize base values
-options = {"length" => 10, "count" => 1}
+options = {:length => 10, :count => 1}
 
 OptionParser.new do |parser|
   parser.banner = "CLI password generator."
@@ -71,14 +71,14 @@ OptionParser.new do |parser|
   # This is just so we don't have to type parser.on ALL the time
   parser_bool_proc = -> (short_opt, long_opt, description) {
     parser.on(short_opt, long_opt, description) do |opt|
-      options[long_opt.gsub("-", "")] = opt
+      options[long_opt.gsub("-", "").to_sym] = opt
     end
   }
 
   # Passing integers to the option
   parser_int_proc = -> (short_opt, long_opt, description) {
     parser.on(short_opt, long_opt, Integer, description) do |value|
-      options[long_opt.gsub(/[A-Z-]+/, "").delete(" ")] = value
+      options[long_opt.gsub(/[A-Z-]+/, "").delete(" ").to_sym] = value
     end
   }
 
