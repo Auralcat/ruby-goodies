@@ -42,17 +42,22 @@ class PasswordGenerator
   end
 
   def generate
-    if @options["emoji"]
-      # We'll need an extra script to show emoji in the shell.
-      # For now I'm using emojify
+    output = []
+    @options["count"].times do
+      if @options["emoji"]
+        # We'll need an extra script to show emoji in the shell.
+        # For now I'm using emojify
 
-      # We need to put a space between the aliases for emojify to work
-      `emojify #{EMOJI.sample(@options["length"]).join(" ")}`.delete(" ")
-    elsif @options["alphanumeric"]
-      ALPHANUMERIC.sample(@options["length"]).join
-    else
-      ALL_CHARS.sample(@options["length"]).join
+        # We need to put a space between the aliases for emojify to work
+        raw_emoji_sample = EMOJI.sample(@options["length"]).join(" ")
+        output << `emojify #{raw_emoji_sample}`.delete(" ")
+      elsif @options["alphanumeric"]
+        output << ALPHANUMERIC.sample(@options["length"]).join
+      else
+        output << ALL_CHARS.sample(@options["length"]).join
+      end
     end
+    output.join("\n")
   end
 
 end
@@ -95,9 +100,9 @@ OptionParser.new do |parser|
   end
 end.parse!
 
-# Tie everything together
-p = PasswordGenerator.new(options)
-
-options["count"].times do
+# Execute when called from the command line.
+# Equivalent to Python's if __name__ == "main"
+if __FILE__ == $0
+  p = PasswordGenerator.new(options)
   puts p.generate
 end
