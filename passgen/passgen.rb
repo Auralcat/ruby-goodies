@@ -3,17 +3,13 @@
 
 require 'optparse'
 
-# Initialize constants
 ALL_CHARS = (32).upto(126).map{|n| n.chr} # includes parens, brackets, etc
 ALPHANUMERIC = "a".upto("z").to_a
   .concat("A".upto("Z").to_a)
   .concat("0".upto("9").to_a)
 
-# Find emoji-list.txt
 emoji_file_path = Dir.home + "/ruby-goodies/passgen/emoji-list.txt"
 EMOJI = File.readlines(emoji_file_path).map{|line| line.chomp}
-
-# Creating module to mix in with the PasswordGenerator class
 
 # This is the logic part of the program
 class PasswordGenerator
@@ -63,7 +59,7 @@ class PasswordGenerator
 end
 
 # Treating options on input, initialize base values
-options = {:length => 10, :count => 1}
+default_options = {:length => 10, :count => 1}
 
 OptionParser.new do |parser|
   parser.banner = "CLI password generator."
@@ -71,14 +67,14 @@ OptionParser.new do |parser|
   # This is just so we don't have to type parser.on ALL the time
   parser_bool_proc = -> (short_opt, long_opt, description) {
     parser.on(short_opt, long_opt, description) do |opt|
-      options[long_opt.gsub("-", "").to_sym] = opt
+      default_options[long_opt.gsub("-", "").to_sym] = opt
     end
   }
 
   # Passing integers to the option
   parser_int_proc = -> (short_opt, long_opt, description) {
     parser.on(short_opt, long_opt, Integer, description) do |value|
-      options[long_opt.gsub(/[A-Z-]+/, "").delete(" ").to_sym] = value
+      default_options[long_opt.gsub(/[A-Z-]+/, "").delete(" ").to_sym] = value
     end
   }
 
@@ -103,6 +99,6 @@ end.parse!
 # Execute when called from the command line.
 # Equivalent to Python's if __name__ == "main"
 if __FILE__ == $0
-  p = PasswordGenerator.new(options)
+  p = PasswordGenerator.new(default_options)
   puts p.generate
 end
