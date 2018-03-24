@@ -25,17 +25,22 @@ class LoremGenerator
   # You can only generate one of either paragraphs, phrases or words.
   # If a conflict comes up, pick the shortest one.
   def generate
-
+    if @particle_options[:paragraphs]
+      Faker::Lorem.paragraphs(@particle_options[:paragraphs])
+    elsif @particle_options[:sentences]
+      Faker::Lorem.sentences(@particle_options[:sentences])
+    elsif @particle_options[:words]
+      Faker::Lorem.words(@particle_options[:words])
+    end
   end
 end
 
 OptionParser.new do |parser|
   parser.banner = 'CLI Lorem Ipsum generator.'
 
-  # This is just so we don't have to type parser.on ALL the time
   parser_generator_proc = -> (short_opt, long_opt, description) {
     parser.on(short_opt, long_opt, description) do |opt|
-      default_options[long_opt.delete('-').to_sym] = opt
+      generator_options[long_opt.delete('-').to_sym] = opt
     end
   }
 
@@ -68,6 +73,6 @@ end.parse!
 # Execute when called from the command line.
 # Equivalent to Python's if __name__ == "main"
 if $PROGRAM_NAME == __FILE__
-  p = Lorem.new(default_options)
+  p = LoremGenerator.new(particle_options)
   puts p.generate
 end
