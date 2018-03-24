@@ -4,7 +4,18 @@
 require 'optparse'
 
 # Treating options on input, initialize base values
-default_options = {:length => 10, :count => 1}
+default_options = {:paragraphs => 4, :lorem_ipsum => true}
+
+# Generator object
+class LoremGenerator
+
+  def initialize(options)
+    @options = options
+  end
+
+  def generate
+  end
+end
 
 OptionParser.new do |parser|
   parser.banner = "CLI Lorem Ipsum generator."
@@ -35,6 +46,6 @@ end.parse!
 # Execute when called from the command line.
 # Equivalent to Python's if __name__ == "main"
 if __FILE__ == $0
-  p = PasswordGenerator.new(default_options)
+  p = Lorem.new(default_options)
   puts p.generate
 end

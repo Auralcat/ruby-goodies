@@ -22,29 +22,29 @@ class TestLoremGenerator < Minitest::Test
 
   # Testing default output
   def test_output_starts_with_lorem_ipsum_on_default
-    assert_equal(/^Lorem ipsum/.match(@lorem.output), true)
+    assert_equal(/^Lorem ipsum/.match(@lorem.generate), true)
   end
 
   def test_output_returns_4_medium_paragraphs_on_default
     # Split the paragraphs and count them
-    assert_equal(@lorem.output.split("\n\n").length, 4)
+    assert_equal(@lorem.generate.split("\n\n").length, 4)
   end
 
   def test_output_returns_a_string
-    assert_equal(@lorem.output.is_a?(String), true)
+    assert_equal(@lorem.generate.is_a?(String), true)
   end
 
   # Paragraph checking
   def test_short_paragraphs_have_between_25_and_30_words
-    assert_equal(@single_paragraph.output.word_count_in_range?(25, 30), true)
+    assert_equal(@single_paragraph.generate.word_count_in_range?(25, 30), true)
   end
 
   def test_medium_paragraphs_have_between_50_and_60_words
-    assert_equal(@single_paragraph.output.word_count_in_range?(50, 60), true)
+    assert_equal(@single_paragraph.generate.word_count_in_range?(50, 60), true)
   end
 
   def test_long_paragraphs_have_between_75_and_90_words
-    assert_equal(@single_paragraph.output.word_count_in_range?(75, 90), true)
+    assert_equal(@single_paragraph.generate.word_count_in_range?(75, 90), true)
   end
 
 end
