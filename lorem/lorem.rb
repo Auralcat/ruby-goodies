@@ -1,7 +1,9 @@
 #!/usr/bin/env ruby
 # CLI Lorem Ipsum generator in Ruby.
 
+# This Faker gem looks interesting
 require 'optparse'
+require 'faker'
 
 # Treating options on input, initialize base values
 default_options = {:paragraphs => 4, :lorem_ipsum => true}
@@ -9,11 +11,15 @@ default_options = {:paragraphs => 4, :lorem_ipsum => true}
 # Generator object
 class LoremGenerator
 
+  # Word sets.
   def initialize(options)
     @options = options
   end
 
   def generate
+    if (@options[:lorem_ipsum])
+      Faker::Lorem.paragraphs(@options[:paragraphs])
+    end
   end
 end
 

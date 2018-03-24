@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require './passgen'
+require './lorem'
 
 # Helper functions
 class String
