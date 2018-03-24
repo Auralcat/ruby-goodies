@@ -6,7 +6,7 @@ require 'optparse'
 require 'faker'
 
 # Treating options on input, initialize base values
-particle_options = { paragraphs: 4 }
+particle_options = {}
 
 # Helper selector object
 class OptionSelector
@@ -60,19 +60,20 @@ OptionParser.new do |parser|
 
   # Particle options
   parser_particle_proc.call('-w',
-                       '--words',
+                       '--words WORDS',
                        'Generate WORDS words.')
   parser_particle_proc.call('-s',
-                       '--sentences',
+                       '--sentences SENTENCES',
                        'Generate SENTENCES sentences.')
   parser_particle_proc.call('-p',
-                       '--paragraphs',
+                       '--paragraphs PARAGRAPHS',
                        'Generate PARAGRAPHS paragraphs.')
 end.parse!
 
 # Execute when called from the command line.
 # Equivalent to Python's if __name__ == "main"
 if $PROGRAM_NAME == __FILE__
+  particle_options = { paragraphs: 4 } if particle_options.empty?
   p = LoremGenerator.new(particle_options)
   puts p.generate
 end
