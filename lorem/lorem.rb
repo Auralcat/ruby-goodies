@@ -3,6 +3,7 @@
 
 require 'optparse'
 require 'faker'
+require 'yaml'
 
 # Treating options on input, initialize base values
 particle_options = {}
@@ -11,9 +12,12 @@ generator_options = {}
 # Example custom generator
 class Cupcake
   # This signals that this class has static methods
+  @data = YAML.load_file("data/#{name.downcase}.yaml")
   class << self
     # These should return an array of elements
-    def words(number) end
+    def words(number)
+      @data['words'].sample(number)
+    end
 
     def sentences(number) end
 
