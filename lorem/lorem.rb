@@ -8,18 +8,11 @@ require 'faker'
 # Treating options on input, initialize base values
 particle_options = {}
 
-# Helper selector object
-class OptionSelector
-  def initialize(generators, particles)
-    @generators = generator_options
-    @particles = particle_options
-  end
-end
-
 # Generator object
 class LoremGenerator
-  def initialize(particle_options)
+  def initialize(particle_options, generator_options)
     @particle_options = particle_options
+    @generator_options = generator_options
   end
 
   # You can only generate one of either paragraphs, phrases or words.
@@ -78,8 +71,7 @@ if $PROGRAM_NAME == __FILE__
     p = LoremGenerator.new(particle_options)
     puts p.generate
   rescue ArgumentError
-    puts "Inputting two of either generator or particle options is not
-allowed.
+    puts "Inputting two of either generator or particle options is not allowed.
 Generator options are: -l (lorem)
 Particle options are: -w (words), -s (sentences) and -p (paragraph).
 

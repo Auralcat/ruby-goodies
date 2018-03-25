@@ -15,8 +15,10 @@ end
 # Test class
 class TestLoremGenerator < Minitest::Test
   def setup
-    @lorem = LoremGenerator.new(paragraphs: 4)
-    @single_paragraph = LoremGenerator.new(paragraphs: 1)
+    @lorem = LoremGenerator.new({ paragraphs: 4 },
+                                { lorem_ipsum: true })
+    @single_paragraph = LoremGenerator.new({ paragraphs: 1 },
+                                           { lorem_ipsum: true })
   end
 
   def test_output_returns_4_medium_paragraphs_on_default
