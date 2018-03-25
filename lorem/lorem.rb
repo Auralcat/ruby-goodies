@@ -75,11 +75,11 @@ OptionParser.new do |parser|
   parser.banner = 'CLI Lorem Ipsum generator.'
 
   # Passing integers to the option
-  parser_particle_proc = -> (short_opt, long_opt, description) {
+  parser_particle_proc = proc do |short_opt, long_opt, description|
     parser.on(short_opt, long_opt, Integer, description) do |value|
       particle_options[long_opt.gsub(/[A-Z-]+/, '').delete(' ').to_sym] = value
     end
-  }
+  end
 
   # Display help message
   parser.on('-h',
@@ -89,10 +89,6 @@ OptionParser.new do |parser|
   end
 
   # Generator options
-  parser.on('-l', '--lorem-ipsum', 'Use words from Lorem Ipsum') do
-    generator = Faker::Lorem
-  end
-
   parser.on('-c', '--cupcake', 'Use names of sweets (Cupcake Ipsum)') do
     generator = Cupcake
   end
