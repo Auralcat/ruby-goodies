@@ -8,6 +8,19 @@ require 'faker'
 particle_options = {}
 generator_options = {}
 
+# Example custom generator
+class Cupcake
+  # This signals that this class has static methods
+  class << self
+    # These should return an array of elements
+    def words(number) end
+
+    def sentences(number) end
+
+    def paragraphs(number) end
+  end
+end
+
 # Generator object
 class LoremGenerator
   def initialize(particle, generator)
@@ -30,12 +43,6 @@ end
 OptionParser.new do |parser|
   parser.banner = 'CLI Lorem Ipsum generator.'
 
-  parser_generator_proc = -> (short_opt, long_opt, description) {
-    parser.on(short_opt, long_opt, description) do |opt|
-      generator_options[long_opt.delete('-').to_sym] = opt
-    end
-  }
-
   # Passing integers to the option
   parser_particle_proc = -> (short_opt, long_opt, description) {
     parser.on(short_opt, long_opt, Integer, description) do |value|
@@ -53,6 +60,10 @@ OptionParser.new do |parser|
   # Generator options
   parser.on('-l', '--lorem-ipsum', 'Use words from Lorem Ipsum') do
     generator_options = Faker::Lorem
+  end
+
+  parser.on('-c', '--cupcake', 'Use names of sweets (Cupcake Ipsum)') do
+    generator_options = Cupcake
   end
 
   # Particle options
