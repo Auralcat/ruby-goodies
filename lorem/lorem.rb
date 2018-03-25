@@ -23,14 +23,13 @@ class LoremGenerator
   end
 
   # You can only generate one of either paragraphs, phrases or words.
-  # If a conflict comes up, pick the shortest one.
   def generate
     if @particle_options[:paragraphs]
-      Faker::Lorem.paragraphs(@particle_options[:paragraphs]).join('\n')
+      Faker::Lorem.paragraphs(@particle_options[:paragraphs]).join("\n")
     elsif @particle_options[:sentences]
-      Faker::Lorem.sentences(@particle_options[:sentences]).join('\n')
+      Faker::Lorem.sentences(@particle_options[:sentences]).join(' ')
     elsif @particle_options[:words]
-      Faker::Lorem.words(@particle_options[:words]).join('\n')
+      Faker::Lorem.words(@particle_options[:words]).join(' ')
     end
   end
 end
