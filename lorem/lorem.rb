@@ -7,9 +7,9 @@ require 'yaml'
 
 # Treating options on input, initialize base values
 particle_options = {}
-generator_options = {}
+generator = nil
 
-# Example custom generator
+# This is the class we're going to inherit the generators from.
 class BaseGenerator
   # Static class
   class << self
@@ -40,14 +40,15 @@ class BaseGenerator
       # Join a random number of sentences.
       out = []
       number.times do
-        out << sentences(Random.rand(3..7)).join(" ")
+        out << sentences(Random.rand(3..7)).join(' ')
       end
       out
     end
   end
 end
 
-# This is an instance of the base generator, you just need to declare it.
+# This is an instance of the base generator, you just need to declare it,
+# as well as having a classname.yaml file for it.
 class Cupcake < BaseGenerator
 end
 
@@ -58,7 +59,7 @@ class LoremGenerator
     @generator = generator
   end
 
-  # You can only generate one of either paragraphs, phrases or words.
+  # You can generate only one of either paragraphs, phrases or words.
   def generate
     if @particle[:paragraphs]
       @generator.paragraphs(@particle[:paragraphs]).join("\n")
@@ -89,11 +90,11 @@ OptionParser.new do |parser|
 
   # Generator options
   parser.on('-l', '--lorem-ipsum', 'Use words from Lorem Ipsum') do
-    generator_options = Faker::Lorem
+    generator = Faker::Lorem
   end
 
   parser.on('-c', '--cupcake', 'Use names of sweets (Cupcake Ipsum)') do
-    generator_options = Cupcake
+    generator = Cupcake
   end
 
   # Particle options
@@ -113,8 +114,8 @@ end.parse!
 if $PROGRAM_NAME == __FILE__
   begin
     particle_options = { paragraphs: 4 } if particle_options.empty?
-    generator_options = Faker::Lorem if generator_options.nil?
-    p = LoremGenerator.new(particle_options, generator_options)
+    generator = Faker::Lorem if generator.nil?
+    p = LoremGenerator.new(particle_options, generator)
     puts p.generate
   rescue ArgumentError
     puts "Inputting two of either generator or particle options is not allowed.
