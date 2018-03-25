@@ -31,15 +31,15 @@ class TestLoremGenerator < Minitest::Test
   end
 
   # Paragraph checking
-  def test_short_paragraphs_have_between_25_and_30_words
-    assert_equal(@single_paragraph.generate.word_count_in_range?(25, 30), true)
+  def test_short_paragraphs_have_between_25_and_35_words
+    assert_equal(@single_paragraph.generate.word_count_in_range?(25, 35), true)
   end
 
-  def test_medium_paragraphs_have_between_50_and_60_words
-    assert_equal(@single_paragraph.generate.word_count_in_range?(50, 60), true)
+  def test_medium_paragraphs_have_between_50_and_70_words
+    assert_equal(@single_paragraph.generate.word_count_in_range?(50, 70), true)
   end
 
-  def test_long_paragraphs_have_between_75_and_90_words
-    assert_equal(@single_paragraph.generate.word_count_in_range?(75, 90), true)
+  def test_long_paragraphs_have_between_75_and_105_words
+    assert_equal(@single_paragraph.generate.word_count_in_range?(75, 105), true)
   end
 end

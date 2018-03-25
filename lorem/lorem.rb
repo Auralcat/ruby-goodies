@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 # CLI Lorem Ipsum generator in Ruby.
 
-# This Faker gem looks interesting
 require 'optparse'
 require 'faker'
 
@@ -11,19 +10,19 @@ generator_options = {}
 
 # Generator object
 class LoremGenerator
-  def initialize(particle_options, generator_options)
-    @particle_options = particle_options
-    @generator_options = generator_options
+  def initialize(particle, generator)
+    @particle = particle
+    @generator = generator
   end
 
   # You can only generate one of either paragraphs, phrases or words.
   def generate
-    if @particle_options[:paragraphs]
-      Faker::Lorem.paragraphs(@particle_options[:paragraphs]).join("\n")
-    elsif @particle_options[:sentences]
-      Faker::Lorem.sentences(@particle_options[:sentences]).join(' ')
-    elsif @particle_options[:words]
-      Faker::Lorem.words(@particle_options[:words]).join(' ')
+    if @particle[:paragraphs]
+      @generator.paragraphs(@particle[:paragraphs]).join("\n")
+    elsif @particle[:sentences]
+      @generator.sentences(@particle[:sentences]).join(' ')
+    elsif @particle[:words]
+      @generator.words(@particle[:words]).join(' ')
     end
   end
 end
@@ -51,6 +50,11 @@ OptionParser.new do |parser|
     puts parser
   end
 
+  # Generator options
+  parser.on('-l', '--lorem-ipsum', 'Use words from Lorem Ipsum') do
+    generator_options = Faker::Lorem
+  end
+
   # Particle options
   parser_particle_proc.call('-w',
                             '--words WORDS',
@@ -68,7 +72,7 @@ end.parse!
 if $PROGRAM_NAME == __FILE__
   begin
     particle_options = { paragraphs: 4 } if particle_options.empty?
-    generator_options = { lorem_ipsum: true } if generator_options.empty?
+    generator_options = Faker::Lorem if generator_options.empty?
     p = LoremGenerator.new(particle_options, generator_options)
     puts p.generate
   rescue ArgumentError
