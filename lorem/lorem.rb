@@ -11,17 +11,38 @@ generator_options = {}
 
 # Example custom generator
 class Cupcake
-  # This signals that this class has static methods
   @data = YAML.load_file("data/#{name.downcase}.yaml")
+  # Static class
   class << self
-    # These should return an array of elements
+    def say_my_name
+      puts "My name is #{name}"
+    end
+
     def words(number)
       @data['words'].sample(number)
     end
 
-    def sentences(number) end
+    def sentences(number)
+      # Here we can get a random number of words.
+      # Capitalize the first one and put a period in the last one.
+      out = []
+      number.times do
+        buf = [words(1).pop.capitalize]
+        buf.concat(words(Random.rand(6..9)))
+        buf << words(1).pop + '.'
+        out << buf.join(' ')
+      end
+      out
+    end
 
-    def paragraphs(number) end
+    def paragraph(number)
+      # Join a random number of sentences.
+      out = []
+      number.times do
+        out << sentences(Random.rand(3..7)).join(" ")
+      end
+      out
+    end
   end
 end
 
