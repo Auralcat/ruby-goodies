@@ -13,13 +13,10 @@ generator = nil
 class BaseGenerator
   # Static class
   class << self
-    def say_my_name
-      puts "My name is #{name}"
-    end
-
     def words(number)
       # Declaring data here avoids repeating yourself for other generators.
-      data = YAML.load_file("data/#{name.downcase}.yaml")
+      path = "#{Dir.home}/ruby-goodies/lorem/data/#{name.downcase}.yaml"
+      data = YAML.load_file(path)
       data['words'].sample(number)
     end
 
