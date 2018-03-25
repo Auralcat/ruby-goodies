@@ -23,7 +23,7 @@ class TestLoremGenerator < Minitest::Test
 
   def test_output_returns_4_medium_paragraphs_on_default
     # Split the paragraphs and count them
-    assert_equal(@lorem.generate.split("\n\n").length, 4)
+    assert_equal(@lorem.generate.split("\n").length, 4)
   end
 
   def test_output_returns_a_string

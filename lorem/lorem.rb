@@ -7,6 +7,7 @@ require 'faker'
 
 # Treating options on input, initialize base values
 particle_options = {}
+generator_options = {}
 
 # Generator object
 class LoremGenerator
@@ -52,14 +53,14 @@ OptionParser.new do |parser|
 
   # Particle options
   parser_particle_proc.call('-w',
-                       '--words WORDS',
-                       'Generate WORDS words.')
+                            '--words WORDS',
+                            'Generate WORDS words.')
   parser_particle_proc.call('-s',
-                       '--sentences SENTENCES',
-                       'Generate SENTENCES sentences.')
+                            '--sentences SENTENCES',
+                            'Generate SENTENCES sentences.')
   parser_particle_proc.call('-p',
-                       '--paragraphs PARAGRAPHS',
-                       'Generate PARAGRAPHS paragraphs.')
+                            '--paragraphs PARAGRAPHS',
+                            'Generate PARAGRAPHS paragraphs.')
 end.parse!
 
 # Execute when called from the command line.
@@ -67,8 +68,8 @@ end.parse!
 if $PROGRAM_NAME == __FILE__
   begin
     particle_options = { paragraphs: 4 } if particle_options.empty?
-    raise ArgumentError if particle_options.length > 1 || generator_options > 1
-    p = LoremGenerator.new(particle_options)
+    generator_options = { lorem_ipsum: true } if generator_options.empty?
+    p = LoremGenerator.new(particle_options, generator_options)
     puts p.generate
   rescue ArgumentError
     puts "Inputting two of either generator or particle options is not allowed.
