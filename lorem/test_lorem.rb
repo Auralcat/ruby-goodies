@@ -4,20 +4,19 @@ require './lorem'
 # Helper functions
 class String
   def count_words
-    self.split(" ").length
+    split(' ').length
   end
 
   def word_count_in_range?(start, stop)
-    self.word_count <= stop and self.word_count >= start
+    word_count <= stop && word_count >= start
   end
 end
 
 # Test class
 class TestLoremGenerator < Minitest::Test
-
   def setup
-    @lorem = LoremGenerator.new()
-    @single_paragraph = LoremGenerator.new(:paragraphs => 1)
+    @lorem = LoremGenerator.new(paragraphs: 4)
+    @single_paragraph = LoremGenerator.new(paragraphs: 1)
   end
 
   # Testing default output
@@ -46,5 +45,4 @@ class TestLoremGenerator < Minitest::Test
   def test_long_paragraphs_have_between_75_and_90_words
     assert_equal(@single_paragraph.generate.word_count_in_range?(75, 90), true)
   end
-
 end
