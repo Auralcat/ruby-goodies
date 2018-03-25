@@ -35,7 +35,7 @@ class Cupcake
       out
     end
 
-    def paragraph(number)
+    def paragraphs(number)
       # Join a random number of sentences.
       out = []
       number.times do
@@ -108,7 +108,7 @@ end.parse!
 if $PROGRAM_NAME == __FILE__
   begin
     particle_options = { paragraphs: 4 } if particle_options.empty?
-    generator_options = Faker::Lorem if generator_options.empty?
+    generator_options = Faker::Lorem if generator_options.nil?
     p = LoremGenerator.new(particle_options, generator_options)
     puts p.generate
   rescue ArgumentError
