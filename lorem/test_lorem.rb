@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require './lorem'
+require 'faker'
 
 # Helper functions
 class String
@@ -16,9 +17,9 @@ end
 class TestLoremGenerator < Minitest::Test
   def setup
     @lorem = LoremGenerator.new({ paragraphs: 4 },
-                                { lorem_ipsum: true })
+                                Faker::Lorem)
     @single_paragraph = LoremGenerator.new({ paragraphs: 1 },
-                                           { lorem_ipsum: true })
+                                           Faker::Lorem)
   end
 
   def test_output_returns_4_medium_paragraphs_on_default
