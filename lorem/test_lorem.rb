@@ -8,7 +8,7 @@ class String
   end
 
   def word_count_in_range?(start, stop)
-    word_count <= stop && word_count >= start
+    count_words <= stop && count_words >= start
   end
 end
 
@@ -17,11 +17,6 @@ class TestLoremGenerator < Minitest::Test
   def setup
     @lorem = LoremGenerator.new(paragraphs: 4)
     @single_paragraph = LoremGenerator.new(paragraphs: 1)
-  end
-
-  # Testing default output
-  def test_output_starts_with_lorem_ipsum_on_default
-    assert_equal(/^Lorem ipsum/.match(@lorem.generate), true)
   end
 
   def test_output_returns_4_medium_paragraphs_on_default

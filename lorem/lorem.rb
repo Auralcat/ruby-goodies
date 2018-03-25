@@ -26,11 +26,11 @@ class LoremGenerator
   # If a conflict comes up, pick the shortest one.
   def generate
     if @particle_options[:paragraphs]
-      Faker::Lorem.paragraphs(@particle_options[:paragraphs])
+      Faker::Lorem.paragraphs(@particle_options[:paragraphs]).join('\n')
     elsif @particle_options[:sentences]
-      Faker::Lorem.sentences(@particle_options[:sentences])
+      Faker::Lorem.sentences(@particle_options[:sentences]).join('\n')
     elsif @particle_options[:words]
-      Faker::Lorem.words(@particle_options[:words])
+      Faker::Lorem.words(@particle_options[:words]).join('\n')
     end
   end
 end
