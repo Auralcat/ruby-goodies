@@ -72,7 +72,17 @@ end.parse!
 # Execute when called from the command line.
 # Equivalent to Python's if __name__ == "main"
 if $PROGRAM_NAME == __FILE__
-  particle_options = { paragraphs: 4 } if particle_options.empty?
-  p = LoremGenerator.new(particle_options)
-  puts p.generate
+  begin
+    particle_options = { paragraphs: 4 } if particle_options.empty?
+    raise ArgumentError if particle_options.length > 1 || generator_options > 1
+    p = LoremGenerator.new(particle_options)
+    puts p.generate
+  rescue ArgumentError
+    puts "Inputting two of either generator or particle options is not
+allowed.
+Generator options are: -l (lorem)
+Particle options are: -w (words), -s (sentences) and -p (paragraph).
+
+Usage: lorem (-w -s -p) NUMBER (Either option w, s OR p.)"
+  end
 end
