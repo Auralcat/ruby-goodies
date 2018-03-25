@@ -10,8 +10,7 @@ particle_options = {}
 generator_options = {}
 
 # Example custom generator
-class Cupcake
-  @data = YAML.load_file("data/#{name.downcase}.yaml")
+class BaseGenerator
   # Static class
   class << self
     def say_my_name
@@ -19,7 +18,9 @@ class Cupcake
     end
 
     def words(number)
-      @data['words'].sample(number)
+      # Declaring data here avoids repeating yourself for other generators.
+      data = YAML.load_file("data/#{name.downcase}.yaml")
+      data['words'].sample(number)
     end
 
     def sentences(number)
@@ -44,6 +45,10 @@ class Cupcake
       out
     end
   end
+end
+
+# This is an instance of the base generator, you just need to declare it.
+class Cupcake < BaseGenerator
 end
 
 # Generator object
