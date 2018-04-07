@@ -17,7 +17,6 @@ html_file.css('*').each do |element|
   buf = element.attr('class')
   if !buf.nil?
     if buf.include?(" ")
-      puts "buf has more than one word: #{buf}"
       buf.split(' ').each do |item|
         html_classes << item
       end
@@ -26,6 +25,24 @@ html_file.css('*').each do |element|
     end
   end
 end
+# ^ The same can be done for extracting ids.
 
-puts html_classes.uniq
-puts "#{html_classes.uniq.length} classes have been scraped."
+# I just need one occurrence of each item, and no empty strings!
+html_classes.uniq!.filter!{|x| x != ""}
+puts "#{html_classes.length} classes have been scraped."
+
+=begin
+Now that I have the classes, I want the output to be like this:
+.class-name {
+
+}
+
+.another-class {
+
+}
+=end
+html_classes.each do |item|
+  puts ".#{item} {\n\n}\n\n"
+end
+
+# Write this to a file
