@@ -3,16 +3,8 @@
 
 require 'nokogiri'
 
-def open_html_source
-  # Gets either standard input or a file. Returns the content.
-  output = Nokogiri::HTML(ARGF.read)
-  puts 'Errors found' if output.errors.any?
-  output
-end
-
 # Open local file using Nokogiri
-# SAMPLE FILE
-html_file = open_html_source
+html_file = Nokogiri::HTML(ARGF.read)
 
 # Put all found classes in here
 html_classes = []
@@ -22,7 +14,6 @@ html_file.css('*').each do |element|
 end
 # ^ The same can be done for extracting ids.
 
-# puts html_classes
 # I just need one occurrence of each item, and no empty strings!
 html_classes.uniq!.reject! { |x| x == '' }
 puts "#{html_classes.length} classes have been scraped."
