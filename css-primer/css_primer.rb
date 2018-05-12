@@ -10,11 +10,14 @@ def open_html_source
   output
 end
 
+def parse_css_classes(buf)
+
+end
+
 # Open local file using Nokogiri
 # SAMPLE FILE
 html_file = open_html_source
 
-puts html_file
 # Put all found classes in here
 html_classes = []
 html_file.css('*').each do |element|
@@ -31,9 +34,8 @@ html_file.css('*').each do |element|
 end
 # ^ The same can be done for extracting ids.
 
-puts html_classes
 # I just need one occurrence of each item, and no empty strings!
-html_classes.uniq.reject! { |x| x == '' }
+html_classes.uniq!.reject! { |x| x == '' }
 puts "#{html_classes.length} classes have been scraped."
 
 # Now that I have the classes, I want the output to be like this:
