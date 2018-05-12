@@ -12,7 +12,7 @@ def extract_classes(html_file)
     class_string = element.attr('class')
     out.concat(class_string.split(' ')) unless class_string.nil?
   end
-  out.uniq!.reject! { |x| x == '' }
+  out.uniq.reject { |x| x == '' }
 end
 
 # Open local file using Nokogiri
