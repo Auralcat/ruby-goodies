@@ -2,14 +2,25 @@
 # We'll use Nokogiri to do the parsing
 
 require 'nokogiri'
+require 'optparse'
 
 def get_html_source()
   # Gets either standard input or a file. Returns the content.
-  # Extra step: ensure HTML is well formed
-
+  output = Nokogiri::HTML(ARGV.first)
+  puts "Errors found" if output.errors.any?
+  output.to_html
 end
 
-# Open file using Nokogiri
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: css_primer.rb [options]"
+
+  opts.on("-f", "--file FILENAME", "Read HTML from specified file.") do |f|
+    options[:file] = f
+  end
+end.parse!
+
+# Open local file using Nokogiri
 # SAMPLE FILE
 html_file = Nokogiri::HTML(open(Dir.home + "/parse_this.html"))
 
