@@ -2,36 +2,19 @@
 # We'll use Nokogiri to do the parsing
 
 require 'nokogiri'
-require 'optparse'
 
 def get_html_source()
   # Gets either standard input or a file. Returns the content.
-  output = Nokogiri::HTML(ARGV.first)
+  output = Nokogiri::HTML(ARGF.read)
   puts "Errors found" if output.errors.any?
-  output.to_html
-end
-
-options = {}
-OptionParser.new do |opts|
-  opts.banner = "Usage: css_primer.rb [options]"
-
-  opts.on("-f", "--file FILENAME", "Read HTML from specified file.") do |f|
-    options[:file] = f
-  end
-
-  opts.on("-h", "--help", "Displays this help message.") do
-    puts opts
-    exit
-  end
-end.parse!
-
-class CSSPrimer
+  output
 end
 
 # Open local file using Nokogiri
 # SAMPLE FILE
-html_file = Nokogiri::HTML(open(Dir.home + "/parse_this.html"))
+html_file = get_html_source
 
+puts html_file
 # Put all found classes in here
 html_classes = []
 html_file.css('*').each do |element|
@@ -48,8 +31,9 @@ html_file.css('*').each do |element|
 end
 # ^ The same can be done for extracting ids.
 
+puts html_classes
 # I just need one occurrence of each item, and no empty strings!
-html_classes.uniq!.filter!{|x| x != ""}
+html_classes.uniq.reject!{|x| x == ''}
 puts "#{html_classes.length} classes have been scraped."
 
 =begin
