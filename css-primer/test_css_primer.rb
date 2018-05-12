@@ -4,5 +4,4 @@ require 'minitest/autorun'
 
 # Test class
 class TestLoremGenerator < Minitest::Test
-  def
 end
