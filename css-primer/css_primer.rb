@@ -18,7 +18,15 @@ OptionParser.new do |opts|
   opts.on("-f", "--file FILENAME", "Read HTML from specified file.") do |f|
     options[:file] = f
   end
+
+  opts.on("-h", "--help", "Displays this help message.") do
+    puts opts
+    exit
+  end
 end.parse!
+
+class CSSPrimer
+end
 
 # Open local file using Nokogiri
 # SAMPLE FILE
