@@ -2,14 +2,16 @@
 # We'll use Nokogiri to do the parsing
 
 require 'nokogiri'
-require 'optparse'
 
-# Get this through optparse
-file_path = ""
+def get_html_source()
+  # Gets either standard input or a file. Returns the content.
+  # Extra step: ensure HTML is well formed
+
+end
+
 # Open file using Nokogiri
+# SAMPLE FILE
 html_file = Nokogiri::HTML(open(Dir.home + "/parse_this.html"))
-
-# Extra step: ensure HTML is well formed
 
 # Put all found classes in here
 html_classes = []
