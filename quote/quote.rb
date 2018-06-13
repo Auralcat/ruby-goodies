@@ -4,23 +4,27 @@ require 'optparse'
 # Extending the String class
 class String
   def single_quote
-    # Returns the string with single quotes
+    # Returns the string with ''s
     "'" + self + "'"
   end
 
   def double_quote
-    # Returns the string with single quotes
+    # Returns the string with ""s
     '"' + self + '"'
   end
 
   def parens
-    # Returns the string with parentheses
-    '(' + self + ')'
+    # Returns the string with ()s
+    '( ' + self + ' )'
   end
 
   def brackets
-    # Returns the string with brackets
-    '{' + self + '}'
+    # Returns the string with []
+    '[ ' + self + ' ]'
+  end
+
+  def braces
+    # Returns the string with {}s
   end
 end
 
@@ -36,8 +40,8 @@ OptionParser.new do |parser|
     puts parser
   end
 
-  parser.on('-b', '--brackets', 'Return input in brackets') do
-    puts STDIN.read.split(' ').map(&:brackets).join(' ')
+  parser.on('-b', '--braces', 'Return input in braces') do
+    puts STDIN.read.split(' ').map(&:braces).join(' ')
   end
 
   parser.on('-d', '--double', 'Return input in double quotes') do
@@ -46,6 +50,10 @@ OptionParser.new do |parser|
 
   parser.on('-p', '--parens', 'Return input in parentheses') do
     puts STDIN.read.split(' ').map(&:parens).join(' ')
+  end
+
+  parser.on('-s', '--brackets', 'Return input in brackets') do
+    puts STDIN.read.split(' ').map(&:brackets).join(' ')
   end
 
   parser.on('-P', '--phrase', 'Quote an entire phrase') do
