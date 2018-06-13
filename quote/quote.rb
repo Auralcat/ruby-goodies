@@ -25,6 +25,7 @@ class String
 
   def braces
     # Returns the string with {}s
+    '{ ' + self + ' }'
   end
 end
 
