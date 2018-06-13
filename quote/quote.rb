@@ -15,7 +15,6 @@ class String
 end
 
 # OptionParser code
-options = {}
 OptionParser.new do |parser|
   parser.banner = 'Quote your strings!'
 
@@ -28,11 +27,11 @@ OptionParser.new do |parser|
 
   # Generator options
   parser.on('-s', '--single', 'Return input in single quotes') do
-    options[:single] = true
+    puts ARGV.map(&:single_quote).join(' ')
   end
 
   parser.on('-d', '--double', 'Return input in double quotes') do
-    options[:double] = true
+    puts ARGV.map(&:double_quote).join(' ')
   end
 end.parse!
 
@@ -40,9 +39,7 @@ end.parse!
 # Equivalent to Python's if __name__ == "main"
 if $PROGRAM_NAME == __FILE__
   begin
-    puts ARGV.map(&:single_quote).join(' ') if options[:single]
-    puts ARGV.map(&:double_quote).join(' ') if options[:double]
-  rescue ArgumentError
+  rescue OptionParser::ParseError
     abort 'Choosing single and double quotes at the same time is not allowed.'\
       '\n\nUsage: quote [-s|-d] INPUT'
   end
