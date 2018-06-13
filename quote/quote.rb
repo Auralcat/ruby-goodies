@@ -27,14 +27,12 @@ OptionParser.new do |parser|
   end
 
   # Generator options
-  parser.on('-s', '--single INPUT', 'Return input in single quotes') do
+  parser.on('-s', '--single', 'Return input in single quotes') do
     options[:single] = true
-    puts ARGV.map(&:single_quote).join(' ')
   end
 
-  parser.on('-d', '--double INPUT', 'Return input in double quotes') do
+  parser.on('-d', '--double', 'Return input in double quotes') do
     options[:double] = true
-    puts ARGV.map(&:double_quote).join(' ')
   end
 end.parse!
 
@@ -42,7 +40,9 @@ end.parse!
 # Equivalent to Python's if __name__ == "main"
 if $PROGRAM_NAME == __FILE__
   begin
-    raise OptionParser::ParseError, 'Only one option is allowed' if options.values.all?
+    # raise OptionParser::ParseError, 'Only one option is allowed' if options.values.all?
+    puts ARGV.map(&:single_quote).join(' ') if options[:single]
+    puts ARGV.map(&:double_quote).join(' ') if options[:double]
   rescue
     abort 'Leaving program.'
   end
