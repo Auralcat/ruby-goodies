@@ -111,7 +111,7 @@ if $PROGRAM_NAME == __FILE__
     p = LoremGenerator.new(particle_options, generator)
     puts p.generate
   rescue ArgumentError
-    puts "Inputting two of either generator or particle options is not allowed.
+    abort "Inputting two of either generator or particle options is not allowed.
 Generator options are: -l (lorem)
 Particle options are: -w (words), -s (sentences) and -p (paragraph).
 
