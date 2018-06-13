@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'optparse'
 
+# Extending the String class
 class String
   def single_quote
     # Returns the string with single quotes
@@ -14,14 +15,9 @@ class String
 end
 
 # OptionParser code
+options = {}
 OptionParser.new do |parser|
   parser.banner = 'Quote your strings!'
-
-  parser_particle_proc = proc do |short_opt, long_opt, description|
-    parser.on(short_opt, long_opt, description) do |value|
-      particle_options[long_opt.gsub(/[A-Z-]+/, '').delete(' ').to_sym] = value
-    end
-  end
 
   # Display help message
   parser.on('-h',
@@ -44,7 +40,8 @@ end.parse!
 # Equivalent to Python's if __name__ == "main"
 if $PROGRAM_NAME == __FILE__
   begin
-    # Placeholder
+    puts ARGV.map(&:single_quote).join(' ') if options[:single]
+    puts ARGV.map(&:double_quote).join(' ') if options[:double]
   rescue ArgumentError
     abort 'Choosing single and double quotes at the same time is not allowed.'\
       '\n\nUsage: quote [-s|-d] INPUT'
