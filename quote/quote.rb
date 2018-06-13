@@ -15,9 +15,9 @@ class String
 end
 
 # OptionParser code
-options = {}
+options = { single: true }
 OptionParser.new do |parser|
-  parser.banner = 'Quote your strings!'
+  parser.banner = 'Quote your strings! (default: single quote)'
 
   # Display help message
   parser.on('-h',
@@ -27,16 +27,16 @@ OptionParser.new do |parser|
   end
 
   # Generator options
-  parser.on('-s', '--single', 'Return input in single quotes') do
-    options[:single] = true
-  end
-
   parser.on('-d', '--double', 'Return input in double quotes') do
-    options[:double] = true
+    options[:single] = false
   end
 
   parser.on('-p', '--phrase', 'Quote an entire phrase') do
-    puts ARGV.join(' ').single_quote
+    if options[:single_quote]
+      puts ARGV.join(' ').single_quote
+    else
+      puts ARGV.join(' ').double_quote
+    end
   end
 end.parse!
 
@@ -45,9 +45,12 @@ end.parse!
 if $PROGRAM_NAME == __FILE__
   begin
     # raise OptionParser::ParseError, 'Only one option is allowed' if options.values.all?
-    puts ARGV.map(&:single_quote).join(' ') if options[:single]
-    puts ARGV.map(&:double_quote).join(' ') if options[:double]
-  rescue
+    if options[:single_quote]
+      puts ARGV.map(&:single_quote).join(' ')
+    else
+      puts ARGV.map(&:double_quote).join(' ')
+    end
+  rescue OptionParser::ParseError
     abort 'Leaving program.'
   end
 end
