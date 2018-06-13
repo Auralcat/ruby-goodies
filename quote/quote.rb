@@ -34,6 +34,10 @@ OptionParser.new do |parser|
   parser.on('-d', '--double', 'Return input in double quotes') do
     options[:double] = true
   end
+
+  parser.on('-p', '--phrase', 'Quote an entire phrase') do
+    puts ARGV.join(' ').single_quote
+  end
 end.parse!
 
 # Execute when called from the command line.
