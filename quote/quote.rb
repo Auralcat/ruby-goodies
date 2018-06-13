@@ -32,10 +32,10 @@ OptionParser.new do |parser|
   end
 
   parser.on('-p', '--phrase', 'Quote an entire phrase') do
-    if options[:single_quote]
-      puts ARGV.join(' ').single_quote
+    if options[:single]
+      puts STDIN.read.chomp.single_quote
     else
-      puts ARGV.join(' ').double_quote
+      puts STDIN..read.chomp.double_quote
     end
   end
 end.parse!
@@ -45,10 +45,10 @@ end.parse!
 if $PROGRAM_NAME == __FILE__
   begin
     # raise OptionParser::ParseError, 'Only one option is allowed' if options.values.all?
-    if options[:single_quote]
-      puts ARGV.map(&:single_quote).join(' ')
+    if options[:single]
+      puts STDIN.map(&:single_quote).join(' ')
     else
-      puts ARGV.map(&:double_quote).join(' ')
+      puts STDIN.map(&:double_quote).join(' ')
     end
   rescue OptionParser::ParseError
     abort 'Leaving program.'
